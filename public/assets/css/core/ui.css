@@ -1,0 +1,360 @@
+/*
+  UI layer (Apple/Revolut-like)
+  - Keeps Bootstrap behavior intact.
+  - Uses your existing Bootstrap variables from core/root.css.
+  - Works with the theme switcher via [data-bs-theme].
+*/
+
+/* Page background + surface system */
+[data-bs-theme=light] body {
+    /* keep Bootstrap variables intact, just add a subtle app background tint */
+    background: linear-gradient(180deg, rgba(242,242,247,.85), rgba(242,242,247,0)) , var(--bs-body-bg);
+}
+
+[data-bs-theme=dark] body {
+    background: linear-gradient(180deg, rgba(37,37,40,.55), rgba(28,28,30,0)) , var(--bs-body-bg);
+}
+
+:root,
+[data-bs-theme=light] {
+    --ui-surface: #ffffff;            /* card surface */
+    --ui-surface-elev: #ffffff;       /* slightly elevated areas */
+    --ui-surface-2: rgba(0,0,0,.035);
+
+    --ui-border: rgba(0,0,0,.10);
+    --ui-border-subtle: rgba(0,0,0,.06);
+
+
+    --ui-shadow-1: 0 1px 2px rgba(0,0,0,.06);
+    --ui-shadow-2: 0 18px 50px rgba(0,0,0,.12);
+
+    --ui-radius-sm: 10px;
+    --ui-radius: 14px;
+    --ui-radius-lg: 20px;
+    --ui-pill: 999px;
+
+    --ui-text-muted: rgba(60, 60, 67, .72);
+    --ui-text-subtle: rgba(60, 60, 67, .50);
+    --ui-focus: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .22);
+}
+
+[data-bs-theme=dark] {
+    --ui-surface: rgba(255,255,255,.06);
+    --ui-surface-elev: rgba(255,255,255,.10);
+    --ui-surface-2: rgba(255,255,255,.08);
+
+    --ui-border: rgba(255,255,255,.22);
+    --ui-border-subtle: rgba(255,255,255,.14);
+
+    --ui-shadow-1: 0 1px 2px rgba(0,0,0,.28);
+    --ui-shadow-2: 0 18px 46px rgba(0,0,0,.46);
+
+    --ui-text-muted: rgba(255, 255, 255, .70);
+    --ui-text-subtle: rgba(255, 255, 255, .50);
+}
+
+/* Cards (single source of truth) */
+.ui-card,
+.card.ui-card {
+    background: var(--ui-surface);
+    border: 1px solid var(--ui-border-subtle) !important;
+    border-radius: var(--ui-radius-lg) !important;
+    box-shadow: var(--ui-shadow-1);
+}
+
+[data-bs-theme=dark] .ui-card,
+[data-bs-theme=dark] .card.ui-card {
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0)) , var(--ui-surface);
+    box-shadow: var(--ui-shadow-1), inset 0 0 0 1px rgba(255,255,255,.10);
+}
+
+/* Also make plain Bootstrap cards look cleaner where we didn't migrate yet */
+.card {
+    border: 1px solid var(--ui-border-subtle);
+    border-radius: var(--ui-radius-lg);
+    background: var(--ui-surface);
+    box-shadow: var(--ui-shadow-1);
+}
+
+[data-bs-theme=dark] .card {
+    background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,0)) , var(--ui-surface);
+}
+
+/* Card sections */
+.card-header,
+.card-footer {
+    background: transparent;
+    border-color: var(--ui-border-subtle);
+}
+
+/* Typography */
+h1, .h1 {
+    letter-spacing: -0.02em;
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+h2, .h2 {
+    letter-spacing: -0.015em;
+    font-weight: 750;
+    line-height: 1.18;
+}
+
+.text-ui-muted { color: var(--ui-text-muted) !important; }
+.text-ui-subtle { color: var(--ui-text-subtle) !important; }
+
+/* Buttons (subtle, keep Bootstrap variants) */
+.btn {
+    border-radius: var(--ui-pill);
+    font-weight: 650;
+}
+
+.btn:focus {
+    box-shadow: var(--ui-focus) !important;
+}
+
+.btn-outline-secondary,
+.btn-outline-primary {
+    border-color: var(--ui-border);
+}
+
+/* Forms */
+.form-control,
+.form-select {
+    border-radius: var(--ui-radius);
+    border-color: var(--ui-border);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: rgba(var(--bs-primary-rgb), .45);
+    box-shadow: var(--ui-focus);
+}
+
+/* Tables */
+.ui-table thead th {
+    color: var(--ui-text-muted);
+    font-weight: 700;
+    letter-spacing: .01em;
+    border-bottom-color: var(--ui-border-subtle);
+}
+
+.ui-table tbody tr { transition: background .12s ease; }
+.ui-table tbody tr:hover { background: var(--ui-surface-2); }
+
+/* Navbar active + premium feel */
+.navbar .nav-link {
+    border-radius: var(--ui-pill);
+    transition: background .12s ease, color .12s ease;
+}
+
+.navbar .nav-link.active {
+    background: rgba(var(--bs-primary-rgb), .14);
+    color: var(--bs-body-color) !important;
+    box-shadow: inset 0 0 0 1px rgba(var(--bs-primary-rgb), .22);
+}
+
+.navbar .nav-link.active:hover {
+    background: rgba(var(--bs-primary-rgb), .14);
+    transform: none;
+    cursor: default;
+}
+
+/* Footer version badge (no icon) */
+.version-badge {
+    border-radius: var(--ui-pill) !important;
+    padding: .42rem .8rem;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,0))
+        , rgba(var(--bs-primary-rgb), .08);
+    border: 1px solid rgba(var(--bs-primary-rgb), .22);
+    color: rgba(0,0,0,.70);
+    letter-spacing: .01em;
+}
+
+[data-bs-theme=dark] .version-badge {
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0))
+        , rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.18);
+    color: rgba(255,255,255,.78);
+}
+
+/* Compact trailer cards */
+.ui-trailer-card {
+    height: 100%;
+}
+
+.ui-trailer-card .card-body {
+    padding: 1.05rem;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.ui-trailer-card .ui-trailer-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .75rem;
+}
+
+.ui-trailer-card .ui-trailer-code {
+    font-size: .8rem;
+    color: var(--ui-text-muted);
+    letter-spacing: .02em;
+}
+
+.ui-trailer-card .ui-trailer-name {
+    font-weight: 800;
+    font-size: 1.05rem;
+    line-height: 1.15;
+    margin: .1rem 0 0 0;
+}
+
+.ui-trailer-card .ui-trailer-meta {
+    color: var(--ui-text-muted);
+    font-size: .9rem;
+}
+
+.ui-trailer-card .ui-trailer-spacer {
+    flex: 1 1 auto;
+}
+
+.ui-trailer-card .btn {
+    width: 100%;
+}
+
+@media (max-width: 767px) {
+    .ui-trailer-card .card-body { padding: 1rem; }
+}
+
+/* Dropdown (print menu) */
+.dropdown-menu {
+    border-radius: var(--ui-radius-lg);
+    border: 0;
+    box-shadow: var(--ui-shadow-2);
+    padding: .5rem;
+}
+
+.dropdown-item {
+    border-radius: 12px;
+    padding: .6rem .75rem;
+}
+
+.dropdown-item:hover {
+    background: var(--ui-surface-2);
+}
+
+.dropdown-divider {
+    border-top-color: var(--ui-border-subtle);
+}
+
+/* Dashboard table row hover + pill badges */
+.reservation-row { cursor: pointer; }
+.reservation-row:hover { background: var(--ui-surface-2); }
+.badge-pill { border-radius: var(--ui-pill); }
+
+/* Soft badges (Revolut-like) */
+.ui-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    border-radius: var(--ui-pill);
+    padding: .42rem .75rem;
+    font-weight: 750;
+    font-size: .85rem;
+    line-height: 1;
+    letter-spacing: .01em;
+    border: 1px solid transparent;
+}
+
+.ui-badge i {
+    font-size: .95em;
+    opacity: .9;
+}
+
+.ui-badge--success {
+    background: rgba(var(--bs-success-rgb), .12);
+    border-color: rgba(var(--bs-success-rgb), .22);
+    color: rgba(var(--bs-success-rgb), .95);
+}
+
+.ui-badge--warning {
+    background: rgba(var(--bs-warning-rgb), .14);
+    border-color: rgba(var(--bs-warning-rgb), .28);
+    color: rgba(120, 90, 0, .95);
+}
+
+[data-bs-theme=dark] .ui-badge--warning {
+    color: rgba(255, 218, 106, .95);
+}
+
+.ui-badge--danger {
+    background: rgba(var(--bs-danger-rgb), .12);
+    border-color: rgba(var(--bs-danger-rgb), .22);
+    color: rgba(var(--bs-danger-rgb), .95);
+}
+
+.ui-badge--neutral {
+    background: rgba(128, 128, 128, .10);
+    border-color: rgba(128, 128, 128, .18);
+    color: var(--ui-text-muted);
+}
+
+/* Avoid 'sticky' focus ring on theme buttons after click */
+/* (theme buttons were removed; keep no-op section intentionally empty) */
+
+html, body {
+    min-height: 100%;
+}
+
+[data-bs-theme=light] body,
+[data-bs-theme=dark] body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Card padding helpers */
+.ui-card-pad { padding: 1.25rem !important; }
+@media (max-width: 767px) { .ui-card-pad { padding: 1rem !important; } }
+
+/* When using .ui-card without ui-card-pad, keep Bootstrap-like padding */
+.ui-card > .card-body,
+.card.ui-card > .card-body {
+    padding: 1.25rem;
+}
+
+@media (max-width: 767px) {
+    .ui-card > .card-body,
+    .card.ui-card > .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Trailer cards: slightly tighter, but never zero */
+.ui-trailer-card .card-body {
+    padding: 1.05rem;
+}
+@media (max-width: 767px) { .ui-trailer-card .card-body { padding: 1rem; } }
+
+/* Modals: ensure readable surfaces in dark mode (avoid transparent modal content) */
+.modal-content {
+    background: var(--ui-surface);
+    border: 1px solid var(--ui-border-subtle);
+    border-radius: var(--ui-radius-lg);
+    box-shadow: var(--ui-shadow-2);
+}
+
+[data-bs-theme=dark] .modal-content {
+    background: var(--ui-surface-elev);
+    box-shadow: var(--ui-shadow-2), inset 0 0 0 1px rgba(255,255,255,.10);
+}
+
+.modal-backdrop.show {
+    opacity: .55;
+}
+
+[data-bs-theme=dark] .modal-backdrop.show {
+    opacity: .70;
+}

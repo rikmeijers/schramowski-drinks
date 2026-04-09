@@ -1,0 +1,23 @@
+.navbar-toggler {
+    border-color: transparent;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.default-rounded {
+    border-radius: 0.75rem !important;
+}
+
+@media (max-width: 767px) {
+    .mobile-center {
+        text-align: center !important;
+    }
+
+    .mobile-hidden {
+        display: none !important;
+    }
+}
+
+/* version-badge is styled in /assets/css/core/ui.css to respect [data-bs-theme] */

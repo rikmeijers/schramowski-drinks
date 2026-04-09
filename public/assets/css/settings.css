@@ -1,0 +1,42 @@
+.settings-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 1.5rem;
+    margin: auto;
+}
+
+.settings-card {
+    border-radius: var(--bs-border-radius-xl);
+    background-color: var(--bs-secondary-bg);
+    border: 0;
+    box-shadow: var(--bs-box-shadow);
+    padding: 2rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.settings-card-header {
+    background-color: transparent;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--bs-emphasis-color);
+    border-bottom: none;
+    padding-bottom: 1rem;
+}
+
+.settings-alert {
+    border-radius: var(--bs-border-radius-xl);
+    font-weight: 500;
+    box-shadow: var(--bs-box-shadow-sm);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.settings-alert .btn-close {
+    float: none !important;
+    position: static !important;
+    margin: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+}

@@ -1,0 +1,1 @@
+.fade-in{animation:fadeInUp .4s ease both}@keyframes fadeInUp{0%{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.cookie-box{max-width:650px;transition:all .3s ease}.cookie-box:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.1)}

@@ -1,0 +1,36 @@
+{
+  "name": "Schramowski Getränke - Getränke Reservierungen",
+  "version": "1.0.1",
+  "id": "/",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "images/branding/icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "images/screenshots/mobile.png",
+      "sizes": "758x1656",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "images/screenshots/desktop.png",
+      "sizes": "3570x1988",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "author": "Schramowski Getränke",
+  "developer": {
+    "name": "Schramowski Getränke",
+    "url": "https://schramowski-getraenke.de/"
+  }
+}
