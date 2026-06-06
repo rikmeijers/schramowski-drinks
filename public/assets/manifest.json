@@ -14,20 +14,6 @@
       "type": "image/png"
     }
   ],
-  "screenshots": [
-    {
-      "src": "images/screenshots/mobile.png",
-      "sizes": "758x1656",
-      "type": "image/png",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "images/screenshots/desktop.png",
-      "sizes": "3570x1988",
-      "type": "image/png",
-      "form_factor": "wide"
-    }
-  ],
   "author": "Schramowski Getränke",
   "developer": {
     "name": "Schramowski Getränke",
