@@ -11,18 +11,18 @@
             <div class="text-body-secondary">{{ $order->customer_name }}</div>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('rental-orders.index') }}" class="btn btn-outline-primary rounded-pill px-4">Zurück</a>
-            <a href="{{ route('rental-orders.print', $order) }}" class="btn btn-outline-primary rounded-pill px-4" target="_blank">
+            <a href="{{ route('rental-orders.index') }}" class="btn btn-outline-primary rounded px-4">Zurück</a>
+            <a href="{{ route('rental-orders.print', $order) }}" class="btn btn-outline-primary rounded px-4" target="_blank">
                 <i class="bi bi-printer me-2"></i>Drucken
             </a>
-            <a href="{{ route('rental-orders.edit', $order) }}" class="btn btn-outline-primary rounded-pill px-4">
+            <a href="{{ route('rental-orders.edit', $order) }}" class="btn btn-outline-primary rounded px-4">
                 <i class="bi bi-pencil-square me-2"></i>Bearbeiten
             </a>
-            <form method="POST" action="{{ route('rental-orders.destroy', $order) }}" onsubmit="return confirm('Möchtest du diese Vermietung endgültig löschen? Foto und Unterschrift werden ebenfalls gelöscht.');">
+            <form method="POST" action="{{ route('rental-orders.destroy', $order) }}" onsubmit="return confirm('Möchtest du diese Vermietung endgültig löschen? Foto und Unterschrift werden ebenfalls gelöscht.');" data-prevent-double-submit>
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger rounded-pill px-4">
-                    <i class="bi bi-trash me-2"></i>Vermietung zurück / Löschen
+                <button type="submit" class="btn btn-outline-danger rounded px-4" data-loading-text="Wird gelöscht…">
+                    <i class="bi bi-trash me-2"></i>Löschen
                 </button>
             </form>
         </div>
@@ -64,6 +64,9 @@
                         <dt class="col-sm-5">Wohnort</dt><dd class="col-sm-7">{{ $order->customer_city ?? '-' }}</dd>
                         <dt class="col-sm-5">Kfz.-Kennzeichen</dt><dd class="col-sm-7">{{ $order->customer_license_plate ?? '-' }}</dd>
                         <dt class="col-sm-5">Telefon</dt><dd class="col-sm-7">{{ $order->customer_phone ?? '-' }}</dd>
+                        @if($order->customer_email)
+                            <dt class="col-sm-5">E-Mail</dt><dd class="col-sm-7">{{ $order->customer_email }}</dd>
+                        @endif
                         <dt class="col-sm-5">Pers.-Ausweis-Nr.</dt><dd class="col-sm-7">{{ $order->customer_id_number ?? '-' }}</dd>
                         <dt class="col-sm-5">Führerschein-Nr.</dt><dd class="col-sm-7">{{ $order->customer_driver_license_number ?? '-' }}</dd>
                         <dt class="col-sm-5">Datum</dt><dd class="col-sm-7">{{ optional($order->rental_date)->format('d-m-Y') ?? '-' }}</dd>
@@ -89,7 +92,7 @@
                     <div class="mb-3">
                         <div class="fw-semibold mb-1">Foto</div>
                         @if($order->photoAttachment)
-                            <a class="btn btn-sm btn-outline-primary rounded-pill px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}" target="_blank">Foto öffnen</a>
+                            <a class="btn btn-sm btn-outline-primary rounded px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}" target="_blank">Foto öffnen</a>
                         @else
                             <div class="text-body-secondary">Kein Foto.</div>
                         @endif
@@ -98,7 +101,7 @@
                     <div class="mb-0">
                         <div class="fw-semibold mb-1">Unterschrift</div>
                         @if($order->signatureAttachment)
-                            <a class="btn btn-sm btn-outline-primary rounded-pill px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}" target="_blank">Unterschrift öffnen</a>
+                            <a class="btn btn-sm btn-outline-primary rounded px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}" target="_blank">Unterschrift öffnen</a>
                         @else
                             <div class="text-body-secondary">Keine Unterschrift.</div>
                         @endif

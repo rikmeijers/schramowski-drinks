@@ -68,7 +68,7 @@
             <h1 class="fw-bold mb-1">Digitales Mietformular</h1>
             <div class="text-body-secondary">Bitte wie auf dem A4-Formular ausfüllen. Foto und Unterschrift werden als Bilder gespeichert.</div>
         </div>
-        <a href="{{ route('rental-orders.index') }}" class="btn btn-outline-primary rounded-pill px-4">Zurück</a>
+        <a href="{{ route('rental-orders.index') }}" class="btn btn-outline-primary rounded px-4">Zurück</a>
     </div>
 
     @if ($errors->any())
@@ -82,7 +82,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('rental-orders.store') }}" enctype="multipart/form-data" class="rental-form" data-signature-form>
+    <form method="POST" action="{{ route('rental-orders.store') }}" enctype="multipart/form-data" class="rental-form" data-signature-form data-prevent-double-submit>
         @csrf
 
         <div class="a4-form">
@@ -215,7 +215,7 @@
                             <div class="form-text text-body-secondary">Hinweis: Unterschrift muss gesetzt werden, bevor du speichern kannst.</div>
                         @endif
                         <div class="d-flex gap-2 mt-2">
-                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3" data-signature-clear>
+                            <button type="button" class="btn btn-outline-secondary btn-sm rounded px-3" data-signature-clear>
                                 <i class="bi bi-eraser me-1"></i>Löschen
                             </button>
                         </div>
@@ -224,7 +224,7 @@
             </div>
 
             <div class="d-flex justify-content-end mt-4">
-                <button type="submit" class="btn btn-primary rounded-pill px-4">
+                <button type="submit" class="btn btn-primary rounded px-4">
                     <i class="bi bi-check2-circle me-2"></i>Speichern & E-Mail senden
                 </button>
             </div>

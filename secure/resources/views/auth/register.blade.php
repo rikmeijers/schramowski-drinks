@@ -35,7 +35,7 @@
         @endif
 
         <div class="card">
-            <form method="POST" action="{{ url('/register') }}">
+            <form method="POST" action="{{ url('/register') }}" data-prevent-double-submit>
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>

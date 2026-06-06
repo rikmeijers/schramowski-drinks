@@ -29,7 +29,7 @@
             </a>
             <br />
 
-            <form method="POST" class="mt-3" action="{{ route('verification.resend') }}">
+            <form method="POST" class="mt-3" action="{{ route('verification.resend') }}" data-prevent-double-submit>
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">E-Mail-Adresse</label>

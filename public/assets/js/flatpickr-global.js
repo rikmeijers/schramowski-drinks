@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   dateInputs.forEach((input) => {
     if (input.name === 'start_date' || input.name === 'end_date') return;
+    if (input.name === 'rental_date' || input.name === 'return_date') return;
     // Keep native datepicker inside the print dropdown.
     if (input.closest('.dropdown-menu')) return;
 

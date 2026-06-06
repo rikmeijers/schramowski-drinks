@@ -29,7 +29,7 @@
             </a>
             <br />
 
-            <form method="POST" class="mt-3" action="{{ route('password.forgot') }}">
+            <form method="POST" class="mt-3" action="{{ route('password.forgot') }}" data-prevent-double-submit>
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">E-Mail-Adresse</label>

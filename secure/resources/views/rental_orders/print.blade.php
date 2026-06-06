@@ -52,6 +52,9 @@
             <div class="row g-2">
                 <div class="col-6"><strong>Name:</strong> {{ $order->customer_name }}</div>
                 <div class="col-6"><strong>Tel.:</strong> {{ $order->customer_phone ?? '-' }}</div>
+                @if($order->customer_email)
+                    <div class="col-6"><strong>E-Mail:</strong> {{ $order->customer_email }}</div>
+                @endif
                 <div class="col-6"><strong>Straße:</strong> {{ $order->customer_street ?? '-' }}</div>
                 <div class="col-6"><strong>Pers.-Ausweis-Nr.:</strong> {{ $order->customer_id_number ?? '-' }}</div>
                 <div class="col-6"><strong>Wohnort:</strong> {{ $order->customer_city ?? '-' }}</div>

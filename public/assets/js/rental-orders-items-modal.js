@@ -47,8 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const tbody = table.querySelector('tbody');
       rows.forEach(([k,v]) => {
         const tr = document.createElement('tr');
-        const label = (labels[k] || k);
-        tr.innerHTML = `<td>${label}</td><td class="fw-semibold">${parseInt(v,10)}</td>`;
+        const labelTd = document.createElement('td');
+        labelTd.textContent = labels[k] || k;
+        const qtyTd = document.createElement('td');
+        qtyTd.className = 'fw-semibold';
+        qtyTd.textContent = parseInt(v, 10);
+        tr.appendChild(labelTd);
+        tr.appendChild(qtyTd);
         tbody.appendChild(tr);
       });
 

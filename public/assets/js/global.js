@@ -25,8 +25,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-document.addEventListener("contextmenu", function(event) {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("form[data-prevent-double-submit]").forEach(function (form) {
+        form.addEventListener("submit", function (e) {
+            var btn = form.querySelector('button[type="submit"]');
+            if (!btn) return;
+            if (btn.disabled) {
+                e.preventDefault();
+                return;
+            }
+            btn.disabled = true;
+            btn.dataset.originalHtml = btn.innerHTML;
+            var label = btn.dataset.loadingText || 'Wird gespeichert…';
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>' + label;
+        });
+    });
 });
 
 // Theme: dark mode is disabled for this project. Always force Bootstrap light theme.

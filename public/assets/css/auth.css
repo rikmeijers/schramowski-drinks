@@ -3,31 +3,32 @@ html, body {
 }
 
 .logo {
-    width: 6rem;
+    width: 5rem;
     margin-bottom: 1rem;
 }
 
 .title {
-    font-weight: 800;
-    font-size: 3.5rem;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #0F172A;
 }
 
 body {
     display: flex;
-    background-color: var(--bs-body-bg);
-    color: var(--bs-body-color);
+    background-color: #F8FAFC;
+    color: #1E293B;
 }
 
 .auth-content {
     width: 100%;
-    max-width: 480px;
+    max-width: 440px;
     padding: 1.5rem;
     margin: auto;
 }
 
 @media (max-width: 600px) {
     .title {
-        font-size: 2.5rem;
+        font-size: 1.5rem;
     }
 
     body {
@@ -38,14 +39,13 @@ body {
 }
 
 .alert-warning {
-    border: 0;
-    box-shadow: var(--bs-box-shadow-sm);
-    border-radius: var(--bs-border-radius-xl);
+    border: 1px solid #FDE68A;
+    border-radius: 8px;
     font-weight: 500;
 }
 
 @media (min-width: 601px) {
-    html,body {
+    html, body {
         height: 100%;
     }
 
@@ -55,21 +55,20 @@ body {
 }
 
 .card {
-    border-radius: var(--bs-border-radius-xl);
-    background-color: var(--bs-secondary-bg);
-    border: 0;
-    box-shadow: var(--bs-box-shadow);
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
     padding: 2rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .auth-btn {
-    font-weight: 600;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    font-weight: 500;
+    transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .auth-btn:hover {
-    color: var(--bs-body-color) !important;
+    color: #0F172A !important;
 }
 
 .auth-btn-active:hover {

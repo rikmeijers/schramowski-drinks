@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "schramowski",
+      "runtimeExecutable": "php",
+      "runtimeArgs": ["-S", "127.0.0.1:8765", "-t", "public"],
+      "port": 8765
+    }
+  ]
+}

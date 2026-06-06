@@ -1,14 +1,14 @@
-<div style="height: 25px;"></div>
+<div class="border-top mt-4"></div>
 
 <div class="container mobile-center">
-    <section class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-4 my-4">
+    <section class="row row-cols-1 row-cols-sm-2 row-cols-md-4 py-4 my-4">
         <div class="col-12 col-lg-3 col-md-6 col-sm-12 mb-3">
             <a href="{{ url('/') }}" class="mb-3 link-body-emphasis text-decoration-none">
                 <img src="{{ url('/assets/images/branding/icon.png') }}" width="100" alt="Icon">
             </a>
             <p class="text-body-secondary mt-3 m-0">{{ config('app.name', 'App') }}</p>
             <p class="text-body-secondary m-0 mb-2">
-                <span class="badge rounded-pill version-badge fw-semibold px-3 py-2">
+                <span class="badge rounded version-badge fw-semibold px-3 py-2">
                     v{{ env('APP_VERSION', '1.0.0') }}
                 </span>
             </p>

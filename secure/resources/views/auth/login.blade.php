@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login') }}" data-prevent-double-submit>
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">E-Mail-Adresse</label>
@@ -80,22 +80,23 @@
                 </div>
 
 
-                <div class="mb-3 d-flex justify-content-between align-items-center">
-                    @if(\App\Helpers\CookieConsent::accepted())
-                        <div class="form-check">
-                            <input class="form-check-input me-2" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            <label class="form-check-label" for="remember">Angemeldet bleiben</label>
-                        </div>
-                    @else
-                        <input class="d-none" type="checkbox" name="remember" id="remember">
-                    @endif
-                    <a href="{{ route('password.forgot.form') }}" class="text-decoration-none">Passwort vergessen?</a>
-                </div>
+                @if(\App\Helpers\CookieConsent::accepted())
+                    <div class="mb-3 form-check">
+                        <input class="form-check-input me-2" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <label class="form-check-label" for="remember">Angemeldet bleiben</label>
+                    </div>
+                @else
+                    <input class="d-none" type="checkbox" name="remember" id="remember">
+                @endif
 
-                <div class="d-grid">
+                <div class="d-grid mb-3">
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-box-arrow-in-right me-2"></i> Anmelden
                     </button>
+                </div>
+
+                <div class="text-center">
+                    <a href="{{ route('password.forgot.form') }}" class="text-decoration-none small">Passwort vergessen?</a>
                 </div>
             </form>
         </div>

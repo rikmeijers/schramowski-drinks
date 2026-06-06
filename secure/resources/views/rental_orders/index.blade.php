@@ -7,7 +7,7 @@
             <div class="text-body-secondary">Übersicht und Status aller Vermietungsformulare.</div>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('rental-orders.create') }}" class="btn btn-primary rounded-pill px-4">
+            <a href="{{ route('rental-orders.create') }}" class="btn btn-primary rounded px-4">
                 <i class="bi bi-plus-circle me-2"></i>Neue Vermietung
             </a>
         </div>
@@ -51,16 +51,18 @@
                         </td>
                         <td class="text-end">
                             @php($labels = \App\Support\RentalOrderItemCatalog::labels())
-                            <button type="button"
-                                    class="btn btn-sm btn-outline-secondary rounded-pill px-3 me-1"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#itemsModal"
-                                    data-items-modal-trigger
-                                    data-items='@json($order->items ?? [])'
-                                    data-item-labels='@json($labels)'>
-                                Artikel
-                            </button>
-                            <a href="{{ route('rental-orders.show', $order) }}" class="btn btn-sm btn-outline-primary rounded-pill px-3">Öffnen</a>
+                            <div class="d-flex gap-2 justify-content-end">
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-secondary rounded px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#itemsModal"
+                                        data-items-modal-trigger
+                                        data-items='@json($order->items ?? [])'
+                                        data-item-labels='@json($labels)'>
+                                    Artikel
+                                </button>
+                                <a href="{{ route('rental-orders.show', $order) }}" class="btn btn-sm btn-outline-primary rounded px-3">Öffnen</a>
+                            </div>
                         </td>
                     </tr>
                 @empty

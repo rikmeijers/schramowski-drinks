@@ -6,27 +6,23 @@
             <h1 class="fw-bold mb-1">Benutzerverwaltung</h1>
             <p class="text-body-secondary mb-0">Übersicht und Verwaltung der Benutzer.</p>
         </div>
-        <a href="{{ route('register.form') }}" class="btn btn-primary rounded-pill px-4 ms-2">
+        <a href="{{ route('register.form') }}" class="btn btn-primary rounded px-4 ms-2">
             <i class="bi bi-person-plus me-2"></i> Neuer Benutzer
         </a>
     </div>
 
     @if (session('success'))
-        <div class="alert alert-success border-0 shadow-sm rounded-4 mt-3">
-            {{ session('success') }}
-        </div>
+        <div class="alert alert-success">{{ session('success') }}</div>
     @endif
     @if ($errors->any())
-        <div class="alert alert-danger border-0 shadow-sm rounded-4 mt-3">
-            {{ $errors->first() }}
-        </div>
+        <div class="alert alert-danger">{{ $errors->first() }}</div>
     @endif
 
-    <div class="card border-0 shadow-sm rounded-4">
-        <div class="card-body p-4">
+    <div class="card ui-card">
+        <div class="card-body">
             <h5 class="fw-bold mb-3">Benutzer</h5>
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
+                <table class="table ui-table align-middle mb-0">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -34,33 +30,43 @@
                             <th>E-Mail</th>
                             <th>Rolle</th>
                             <th>Status</th>
-                            <th></th>
+                            <th class="text-end"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($users as $user)
                             <tr>
-                                <td>{{ $user->id }}</td>
+                                <td class="fw-semibold">{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->role }}</td>
-                                <td>{{ $user->is_active ? 'Aktiv' : 'Inaktiv' }}</td>
                                 <td>
+                                    @if($user->isAdmin())
+                                        <span class="badge bg-primary">Admin</span>
+                                    @else
+                                        <span class="badge bg-secondary">{{ ucfirst($user->role) }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($user->is_active)
+                                        <span class="badge bg-success">Aktiv</span>
+                                    @else
+                                        <span class="badge bg-secondary">Inaktiv</span>
+                                    @endif
+                                </td>
+                                <td class="text-end">
                                     @if(!$user->isAdmin())
                                     <form method="POST" action="{{ route('users.destroy', $user->id) }}" onsubmit="return confirm('Möchtest du diesen Benutzer wirklich löschen?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-danger rounded-pill" type="submit">
-                                            <i class="bi bi-trash"></i> Löschen
+                                        <button class="btn btn-sm btn-outline-danger rounded px-3" type="submit">
+                                            <i class="bi bi-trash me-1"></i>Löschen
                                         </button>
                                     </form>
-                                    @else
-                                        <span class="text-muted small">Admin</span>
                                     @endif
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="text-center">Keine Benutzer gefunden.</td></tr>
+                            <tr><td colspan="6" class="text-center text-body-secondary py-5">Keine Benutzer gefunden.</td></tr>
                         @endforelse
                     </tbody>
                 </table>

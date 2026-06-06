@@ -21,7 +21,7 @@
             <div class="text-body-secondary">Änderungen speichern und optional Foto/Unterschrift ersetzen.</div>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('rental-orders.show', $order) }}" class="btn btn-outline-primary rounded-pill px-4">Zurück</a>
+            <a href="{{ route('rental-orders.show', $order) }}" class="btn btn-outline-primary rounded px-4">Zurück</a>
         </div>
     </div>
 
@@ -36,7 +36,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('rental-orders.update', $order) }}" enctype="multipart/form-data" class="rental-form" data-signature-form data-edit-mode>
+    <form method="POST" action="{{ route('rental-orders.update', $order) }}" enctype="multipart/form-data" class="rental-form" data-signature-form data-edit-mode data-prevent-double-submit>
         @csrf
         @method('PUT')
 
@@ -263,7 +263,7 @@
                                 <div class="form-text">Nur wenn du neu unterschreibst, wird die Unterschrift ersetzt.</div>
 
                                 <div class="d-flex gap-2 mt-2">
-                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3" data-signature-clear>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded px-3" data-signature-clear>
                                         <i class="bi bi-eraser me-1"></i>Löschen
                                     </button>
                                 </div>
@@ -283,7 +283,7 @@
                             </div>
 
                             <div class="d-flex gap-2 mt-2">
-                                <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3" data-signature-clear>
+                                <button type="button" class="btn btn-outline-secondary btn-sm rounded px-3" data-signature-clear>
                                     <i class="bi bi-eraser me-1"></i>Löschen
                                 </button>
                             </div>
@@ -293,7 +293,7 @@
             </div>
 
             <div class="d-flex justify-content-end mt-4">
-                <button type="submit" class="btn btn-primary rounded-pill px-4">
+                <button type="submit" class="btn btn-primary rounded px-4">
                     <i class="bi bi-check2-circle me-2"></i>Änderungen speichern
                 </button>
             </div>

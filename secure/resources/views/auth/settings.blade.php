@@ -36,7 +36,7 @@
                 <h5 class="mb-0">Profil aktualisieren</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('settings.updateProfile') }}" method="POST">
+                <form action="{{ route('settings.updateProfile') }}" method="POST" data-prevent-double-submit>
                     @csrf
                     @method('PUT')
 
@@ -62,7 +62,7 @@
                 <h5 class="mb-0">Passwort ändern</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('settings.updatePassword') }}" method="POST">
+                <form action="{{ route('settings.updatePassword') }}" method="POST" data-prevent-double-submit>
                     @csrf
                     @method('PUT')
 

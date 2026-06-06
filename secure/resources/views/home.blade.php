@@ -37,13 +37,13 @@
             <div class="text-body-secondary">Schnellzugriff und aktuelle Vorgänge.</div>
         </div>
         <div class="d-flex flex-wrap gap-2">
-            <a href="{{ route('rental-orders.create') }}" class="btn btn-primary rounded-pill px-4">
+            <a href="{{ route('rental-orders.create') }}" class="btn btn-primary rounded px-4">
                 <i class="bi bi-plus-circle me-2"></i>Neue Vermietung
             </a>
-            <a href="{{ route('rental-orders.index') }}" class="btn btn-outline-primary rounded-pill px-4">Alle Vermietungen</a>
+            <a href="{{ route('rental-orders.index') }}" class="btn btn-outline-primary rounded px-4">Alle Vermietungen</a>
 
             <button type="button"
-                    class="btn btn-outline-secondary rounded-pill px-4"
+                    class="btn btn-outline-secondary rounded px-4"
                     data-daily-mail-run
                     data-daily-url="{{ $manualDailyUrl }}"
                     data-daily-dry-url="{{ $manualDailyDryUrl }}">
@@ -108,6 +108,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Kunde</th>
+                                    <th>Datum</th>
+                                    <th>Rückgabedatum</th>
                                     <th>Status</th>
                                     <th class="text-end">Aktion</th>
                                 </tr>
@@ -117,6 +119,8 @@
                                     <tr>
                                         <td class="fw-semibold">{{ $o->id }}</td>
                                         <td>{{ $o->customer_name }}</td>
+                                        <td>{{ optional($o->rental_date)->format('d-m-Y') ?? '-' }}</td>
+                                        <td>{{ optional($o->return_date)->format('d-m-Y') ?? '-' }}</td>
                                         <td>
                                             @php($label = $o->statusLabel())
                                             @if($label !== '')
@@ -126,7 +130,7 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
-                                            <a class="btn btn-sm btn-outline-primary rounded-pill px-3" href="{{ route('rental-orders.show', $o) }}">Öffnen</a>
+                                            <a class="btn btn-sm btn-outline-primary rounded px-3" href="{{ route('rental-orders.show', $o) }}">Öffnen</a>
                                         </td>
                                     </tr>
                                 @endforeach
