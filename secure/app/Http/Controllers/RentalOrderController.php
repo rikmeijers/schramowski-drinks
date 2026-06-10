@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRentalOrderRequest;
 use App\Http\Requests\UpdateRentalOrderRequest;
 use App\Mail\RentalOrderConfirmationMail;
+use App\Mail\RentalOrderOverdueMail;
+use App\Mail\RentalOrderReminderMail;
 use App\Models\RentalOrder;
 use App\Models\RentalOrderAttachment;
 use App\Models\RentalOrderMailLog;
@@ -186,9 +188,57 @@ class RentalOrderController extends Controller
 
         abort_unless(Storage::disk($disk)->exists($path), 404);
 
-        return Storage::disk($disk)->response($path, $attachment->original_name ?? basename($path), [
-            'Content-Type' => $attachment->mime_type ?? 'application/octet-stream',
+        if (request()->query('raw')) {
+            return Storage::disk($disk)->response($path, $attachment->original_name ?? basename($path), [
+                'Content-Type' => $attachment->mime_type ?? 'application/octet-stream',
+            ]);
+        }
+
+        $typeLabels = ['photo' => 'Foto', 'signature' => 'Unterschrift'];
+
+        return view('rental_orders.attachment', [
+            'title' => ($typeLabels[$attachment->type] ?? 'Anhang') . ' – Vermietung #' . $rentalOrder->id,
+            'order' => $rentalOrder,
+            'attachment' => $attachment,
+            'typeLabel' => $typeLabels[$attachment->type] ?? 'Anhang',
         ]);
+    }
+
+    public function resendMail(RentalOrder $rentalOrder, RentalOrderMailLog $mailLog)
+    {
+        abort_unless($mailLog->rental_order_id === $rentalOrder->id, 404);
+        abort_unless($mailLog->status === 'failed', 422);
+
+        $mailableMap = [
+            'confirmation' => RentalOrderConfirmationMail::class,
+            'reminder' => RentalOrderReminderMail::class,
+            'overdue' => RentalOrderOverdueMail::class,
+        ];
+
+        $mailableClass = $mailableMap[$mailLog->type] ?? null;
+        abort_unless($mailableClass, 422);
+
+        $newLog = RentalOrderMailLog::create([
+            'rental_order_id' => $rentalOrder->id,
+            'type' => $mailLog->type,
+            'to_email' => $mailLog->to_email,
+            'status' => 'queued',
+            'attempted_at' => now(),
+        ]);
+
+        try {
+            Mail::to($mailLog->to_email)->send(new $mailableClass($rentalOrder));
+            $newLog->update(['status' => 'sent']);
+            $mailLog->update(['status' => 'resent']);
+
+            return Redirect::route('rental-orders.show', $rentalOrder)
+                ->with('success', 'E-Mail wurde erneut gesendet.');
+        } catch (\Throwable $e) {
+            $newLog->update(['status' => 'failed', 'error_message' => $e->getMessage()]);
+
+            return Redirect::route('rental-orders.show', $rentalOrder)
+                ->withErrors(['mail' => 'E-Mail konnte nicht gesendet werden: ' . $e->getMessage()]);
+        }
     }
 
     public function print(RentalOrder $rentalOrder)

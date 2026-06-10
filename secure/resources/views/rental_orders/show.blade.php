@@ -7,8 +7,7 @@
 @section('content')
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
         <div>
-            <h1 class="fw-bold mb-1">Vermietung #{{ $order->id }}</h1>
-            <div class="text-body-secondary">{{ $order->customer_name }}</div>
+            <h1 class="fw-bold mb-0">Vermietung #{{ $order->id }}</h1>
         </div>
         <div class="d-flex gap-2">
             <a href="{{ route('rental-orders.index') }}" class="btn btn-outline-primary rounded px-4">Zurück</a>
@@ -92,7 +91,7 @@
                     <div class="mb-3">
                         <div class="fw-semibold mb-1">Foto</div>
                         @if($order->photoAttachment)
-                            <a class="btn btn-sm btn-outline-primary rounded px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}" target="_blank">Foto öffnen</a>
+                            <a class="btn btn-sm btn-outline-primary rounded px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}">Foto öffnen</a>
                         @else
                             <div class="text-body-secondary">Kein Foto.</div>
                         @endif
@@ -101,7 +100,7 @@
                     <div class="mb-0">
                         <div class="fw-semibold mb-1">Unterschrift</div>
                         @if($order->signatureAttachment)
-                            <a class="btn btn-sm btn-outline-primary rounded px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}" target="_blank">Unterschrift öffnen</a>
+                            <a class="btn btn-sm btn-outline-primary rounded px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}">Unterschrift öffnen</a>
                         @else
                             <div class="text-body-secondary">Keine Unterschrift.</div>
                         @endif
@@ -123,6 +122,7 @@
                                 <th>Status</th>
                                 <th>Datum</th>
                                 <th>Fehler</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -140,6 +140,8 @@
                                     <td>
                                         @if($log->status === 'sent')
                                             <span class="badge bg-success">Gesendet</span>
+                                        @elseif($log->status === 'resent')
+                                            <span class="badge bg-secondary">Erneut gesendet</span>
                                         @elseif($log->status === 'failed')
                                             <span class="badge bg-danger">Fehlgeschlagen</span>
                                         @else
@@ -154,10 +156,20 @@
                                             -
                                         @endif
                                     </td>
+                                    <td>
+                                        @if($log->status === 'failed')
+                                            <form method="POST" action="{{ route('rental-orders.mail-logs.resend', [$order, $log]) }}" data-prevent-double-submit>
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-primary rounded px-3" data-loading-text="Wird gesendet…">
+                                                    <i class="bi bi-arrow-clockwise me-1"></i>Erneut senden
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center text-body-secondary py-4">Noch keine E-Mails geloggt.</td>
+                                    <td colspan="6" class="text-center text-body-secondary py-4">Noch keine E-Mails geloggt.</td>
                                 </tr>
                             @endforelse
                             </tbody>

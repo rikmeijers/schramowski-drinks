@@ -42,6 +42,9 @@ Route::middleware(['auth', 'employee'])->group(function () {
 
     Route::get('/rental-orders/{rentalOrder}/attachments/{attachment}', [RentalOrderController::class, 'attachment'])
         ->name('rental-orders.attachments.show');
+
+    Route::post('/rental-orders/{rentalOrder}/mail-logs/{mailLog}/resend', [RentalOrderController::class, 'resendMail'])
+        ->name('rental-orders.mail-logs.resend');
 });
 
 // --------------------
