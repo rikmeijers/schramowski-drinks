@@ -23,7 +23,7 @@ class RentalOrderController extends Controller
     {
         $q = RentalOrder::query();
 
-        $orders = $q->orderByDesc('id')->paginate(20);
+        $orders = $q->orderByDesc('id')->get();
 
         return view('rental_orders.index', [
             'title' => 'Vermietungen',

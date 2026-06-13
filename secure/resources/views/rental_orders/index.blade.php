@@ -73,9 +73,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-body border-top">
-            {{ $orders->links() }}
-        </div>
     </div>
 
     <!-- Items modal -->

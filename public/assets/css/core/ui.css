@@ -323,22 +323,41 @@ html, body {
 }
 
 /* Pagination */
-.page-link {
-    border-radius: 6px;
+.pagination {
+    gap: 0.25rem;
+    margin-bottom: 0;
+}
+
+.page-item .page-link {
+    border-radius: 6px !important;
     border-color: var(--ui-border);
     color: #334155;
     font-size: 0.875rem;
+    margin-left: 0 !important;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
 }
 
-.page-link:hover {
+.page-item .page-link:hover {
     background: #F1F5F9;
     border-color: #CBD5E1;
     color: #0F172A;
 }
 
+.page-item .page-link:focus {
+    box-shadow: var(--ui-focus);
+}
+
 .page-item.active .page-link {
     background: #0F172A;
     border-color: #0F172A;
+    color: #fff;
+}
+
+.page-item.disabled .page-link {
+    color: var(--ui-text-subtle);
+    background: #F8FAFC;
+    cursor: default;
 }
 
 /* Reduce motion */
