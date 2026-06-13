@@ -215,7 +215,7 @@
                                 <div class="small text-body-secondary">Aktuelles Foto:</div>
                                 <a href="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}" target="_blank" rel="noopener">
                                     <img
-                                        src="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}"
+                                        src="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}?raw=1"
                                         alt="Aktuelles Foto"
                                         class="img-fluid rounded border mb-3"
                                         style="max-height: 220px;"
@@ -248,7 +248,7 @@
                                 <div class="small text-body-secondary">Aktuelle Unterschrift:</div>
                                 <a href="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}" target="_blank" rel="noopener">
                                     <img
-                                        src="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}"
+                                        src="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}?raw=1"
                                         alt="Aktuelle Unterschrift"
                                         class="img-fluid rounded border bg-white mb-3"
                                         style="max-height: 140px;"

@@ -100,7 +100,7 @@
             <div class="col-6">
                 <div class="fw-semibold mb-2">Foto</div>
                 @if($order->photoAttachment)
-                    <img src="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}" alt="Foto" style="max-width:100%; border:1px solid var(--a4-border); border-radius:12px;" />
+                    <img src="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}?raw=1" alt="Foto" style="max-width:100%; border:1px solid var(--a4-border); border-radius:12px;" />
                 @else
                     <div class="text-body-secondary">Kein Foto.</div>
                 @endif
@@ -108,7 +108,7 @@
             <div class="col-6">
                 <div class="fw-semibold mb-2">Unterschrift</div>
                 @if($order->signatureAttachment)
-                    <img src="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}" alt="Unterschrift" style="max-width:100%; border:1px solid var(--a4-border); border-radius:12px;" />
+                    <img src="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}?raw=1" alt="Unterschrift" style="max-width:100%; border:1px solid var(--a4-border); border-radius:12px;" />
                 @else
                     <div class="text-body-secondary">Keine Unterschrift.</div>
                 @endif
