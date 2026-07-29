@@ -19,6 +19,11 @@ Route::get('/', [HomeController::class, 'index'])
     ->name('home')
     ->middleware('auth');
 
+// Legacy alias from the old reservations app (bookmarks / intended redirects).
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard')
+    ->middleware(['auth', 'employee']);
+
 Route::middleware(['auth', 'employee'])->group(function () {
     // Gebruikersbeheer (alleen admin)
     Route::middleware('can:admin')->group(function () {
@@ -32,6 +37,7 @@ Route::middleware(['auth', 'employee'])->group(function () {
     // Rental orders
     // --------------------
     Route::get('/rental-orders', [RentalOrderController::class, 'index'])->name('rental-orders.index');
+    Route::get('/rental-orders/trashed', [RentalOrderController::class, 'trashed'])->name('rental-orders.trashed');
     Route::get('/rental-orders/create', [RentalOrderController::class, 'create'])->name('rental-orders.create');
     Route::post('/rental-orders', [RentalOrderController::class, 'store'])->name('rental-orders.store');
     Route::get('/rental-orders/{rentalOrder}', [RentalOrderController::class, 'show'])->name('rental-orders.show');
@@ -39,6 +45,8 @@ Route::middleware(['auth', 'employee'])->group(function () {
     Route::get('/rental-orders/{rentalOrder}/edit', [RentalOrderController::class, 'edit'])->name('rental-orders.edit');
     Route::put('/rental-orders/{rentalOrder}', [RentalOrderController::class, 'update'])->name('rental-orders.update');
     Route::delete('/rental-orders/{rentalOrder}', [RentalOrderController::class, 'destroy'])->name('rental-orders.destroy');
+    Route::post('/rental-orders/{rentalOrder}/restore', [RentalOrderController::class, 'restore'])->name('rental-orders.restore');
+    Route::delete('/rental-orders/{rentalOrder}/force', [RentalOrderController::class, 'forceDestroy'])->name('rental-orders.force-destroy');
 
     Route::get('/rental-orders/{rentalOrder}/attachments/{attachment}', [RentalOrderController::class, 'attachment'])
         ->name('rental-orders.attachments.show');

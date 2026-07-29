@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Redirect;
 
 class DashboardController extends Controller
 {
+    /**
+     * Legacy /dashboard entry (old reservations app).
+     * Keep the route for bookmarks / cached redirects, but send users to the rental overview.
+     */
+    public function index()
+    {
+        return redirect()->route('home');
+    }
+
     public function users()
     {
         $users = User::orderBy('name')->get();

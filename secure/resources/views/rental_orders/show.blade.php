@@ -252,7 +252,7 @@
                 const amount = form.getAttribute('data-outstanding-amount') || '';
                 const hasReceipt = form.getAttribute('data-has-receipt') === '1';
 
-                let message = 'Möchtest du diese Vermietung endgültig löschen? Foto und Unterschrift werden ebenfalls gelöscht.';
+                let message = 'Möchtest du diese Vermietung löschen? Sie wird unter „Zuletzt gelöscht“ aufbewahrt und kann wiederhergestellt werden.';
 
                 if (hasOutstanding) {
                     const details = [];
@@ -260,7 +260,7 @@
                     if (hasReceipt) details.push('Kassenbon-Foto vorhanden');
                     message = 'Achtung: Für diese Vermietung ist ein offener Betrag hinterlegt'
                         + (details.length ? ' (' + details.join(', ') + ')' : '')
-                        + '.\n\nMöchtest du die Vermietung wirklich endgültig löschen? Alle Anhänge werden ebenfalls gelöscht.';
+                        + '.\n\nMöchtest du die Vermietung trotzdem löschen? Sie wird unter „Zuletzt gelöscht“ aufbewahrt.';
                 }
 
                 if (!window.confirm(message)) {

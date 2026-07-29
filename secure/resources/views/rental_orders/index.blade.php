@@ -6,7 +6,13 @@
             <h1 class="fw-bold mb-1">Vermietungen</h1>
             <div class="text-body-secondary">Übersicht und Status aller Vermietungsformulare.</div>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="{{ route('rental-orders.trashed') }}" class="btn btn-outline-secondary rounded px-4">
+                <i class="bi bi-trash me-2"></i>Zuletzt gelöscht
+                @if(($trashedCount ?? 0) > 0)
+                    <span class="badge text-bg-secondary ms-1">{{ $trashedCount }}</span>
+                @endif
+            </a>
             <a href="{{ route('rental-orders.create') }}" class="btn btn-primary rounded px-4">
                 <i class="bi bi-plus-circle me-2"></i>Neue Vermietung
             </a>

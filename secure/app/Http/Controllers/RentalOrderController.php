@@ -21,12 +21,24 @@ class RentalOrderController extends Controller
 {
     public function index(Request $request)
     {
-        $q = RentalOrder::query();
-
-        $orders = $q->orderByDesc('id')->get();
+        $orders = RentalOrder::query()->orderByDesc('id')->get();
+        $trashedCount = RentalOrder::onlyTrashed()->count();
 
         return view('rental_orders.index', [
             'title' => 'Vermietungen',
+            'orders' => $orders,
+            'trashedCount' => $trashedCount,
+        ]);
+    }
+
+    public function trashed()
+    {
+        $orders = RentalOrder::onlyTrashed()
+            ->orderByDesc('deleted_at')
+            ->get();
+
+        return view('rental_orders.trashed', [
+            'title' => 'Zuletzt gelöscht',
             'orders' => $orders,
         ]);
     }
@@ -180,11 +192,32 @@ class RentalOrderController extends Controller
 
     public function destroy(RentalOrder $rentalOrder)
     {
-        // Deleting the order cascades to attachments + mail logs, and attachment model deletes files.
-        $rentalOrder->load('attachments');
         $rentalOrder->delete();
 
-        return Redirect::route('rental-orders.index')->with('success', 'Vermietung wurde endgültig gelöscht.');
+        return Redirect::route('rental-orders.index')
+            ->with('success', 'Vermietung wurde in „Zuletzt gelöscht“ verschoben.');
+    }
+
+    public function restore(int $rentalOrder)
+    {
+        $order = RentalOrder::onlyTrashed()->findOrFail($rentalOrder);
+        $order->restore();
+
+        return Redirect::route('rental-orders.trashed')
+            ->with('success', 'Vermietung #'.$order->id.' wurde wiederhergestellt.');
+    }
+
+    public function forceDestroy(int $rentalOrder)
+    {
+        $order = RentalOrder::onlyTrashed()->findOrFail($rentalOrder);
+
+        // Delete attachments via Eloquent so files are cleaned up (DB cascade would skip that).
+        $order->load('attachments');
+        $order->attachments->each->delete();
+        $order->forceDelete();
+
+        return Redirect::route('rental-orders.trashed')
+            ->with('success', 'Vermietung wurde endgültig gelöscht.');
     }
 
     public function attachment(RentalOrder $rentalOrder, RentalOrderAttachment $attachment)

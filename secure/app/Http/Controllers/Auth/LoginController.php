@@ -12,7 +12,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (auth()->check()) {
-            return redirect()->route('dashboard');
+            return redirect()->route('home');
         }
         return view('auth.login', [
             'title' => 'Anmelden',
