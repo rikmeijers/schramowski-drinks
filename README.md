@@ -90,7 +90,7 @@ Key environment variables (see `secure/.env.example`):
 - `APP_KEY`
 - `APP_LOCALE` / `APP_FALLBACK_LOCALE`
 - `APP_TIMEZONE` (default: `Europe/Berlin`)
-- `APP_VERSION` (used in the UI/footer)
+- `APP_VERSION` (used in the UI/footer; default/base in `.env.example`: `1.0.0`)
 
 ### Database
 
