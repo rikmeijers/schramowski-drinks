@@ -94,6 +94,6 @@
 @endsection
 
 @section('customScripts')
-    <script src="{{ url('/assets/js/rental-orders-items-modal.js') }}"></script>
+    <script src="{{ vasset('/assets/js/rental-orders-items-modal.js') }}"></script>
 @endsection
 

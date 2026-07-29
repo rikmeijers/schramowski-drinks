@@ -21,6 +21,7 @@ class RentalOrder extends Model
         'return_date',
         'items',
         'notes',
+        'outstanding_amount',
         'confirmation_sent_at',
         'reminder_sent_at',
         'overdue_sent_at',
@@ -30,6 +31,7 @@ class RentalOrder extends Model
         'rental_date' => 'date',
         'return_date' => 'date',
         'items' => 'array',
+        'outstanding_amount' => 'decimal:2',
         'confirmation_sent_at' => 'datetime',
         'reminder_sent_at' => 'datetime',
         'overdue_sent_at' => 'datetime',
@@ -57,6 +59,19 @@ class RentalOrder extends Model
         return Attribute::make(
             get: fn () => $this->attachments->firstWhere('type', 'signature'),
         );
+    }
+
+    public function receiptAttachment(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->attachments->firstWhere('type', 'receipt'),
+        );
+    }
+
+    public function hasOutstandingAmountData(): bool
+    {
+        return $this->outstanding_amount !== null
+            || (bool) $this->receiptAttachment;
     }
 
     public function statusLabel(): string

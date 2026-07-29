@@ -4,7 +4,7 @@
 @php($footer = false)
 
 @section('customStyles')
-    <link rel="stylesheet" href="{{ url('/assets/css/rental-orders.css') }}">
+    <link rel="stylesheet" href="{{ vasset('/assets/css/rental-orders.css') }}">
     <style>
         .print-actions { display:flex; justify-content:flex-end; gap:.5rem; margin: 1rem 0; }
         @media print {
@@ -70,6 +70,19 @@
                     <div class="small" style="white-space:pre-wrap;">{{ $order->notes }}</div>
                 </div>
             @endif
+
+            @if($order->outstanding_amount !== null || $order->receiptAttachment)
+                <div class="mt-3">
+                    <div class="fw-semibold mb-1">Offener Betrag</div>
+                    <div>
+                        @if($order->outstanding_amount !== null)
+                            {{ number_format((float) $order->outstanding_amount, 2, ',', '.') }} €
+                        @else
+                            —
+                        @endif
+                    </div>
+                </div>
+            @endif
         </div>
 
         <hr class="my-4" />
@@ -97,7 +110,7 @@
         </div>
 
         <div class="row g-3 mt-4">
-            <div class="col-6">
+            <div class="col-4">
                 <div class="fw-semibold mb-2">Foto</div>
                 @if($order->photoAttachment)
                     <img src="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}?raw=1" alt="Foto" style="max-width:100%; border:1px solid var(--a4-border); border-radius:12px;" />
@@ -105,7 +118,15 @@
                     <div class="text-body-secondary">Kein Foto.</div>
                 @endif
             </div>
-            <div class="col-6">
+            <div class="col-4">
+                <div class="fw-semibold mb-2">Kassenbon</div>
+                @if($order->receiptAttachment)
+                    <img src="{{ route('rental-orders.attachments.show', [$order, $order->receiptAttachment]) }}?raw=1" alt="Kassenbon" style="max-width:100%; border:1px solid var(--a4-border); border-radius:12px;" />
+                @else
+                    <div class="text-body-secondary">Kein Kassenbon.</div>
+                @endif
+            </div>
+            <div class="col-4">
                 <div class="fw-semibold mb-2">Unterschrift</div>
                 @if($order->signatureAttachment)
                     <img src="{{ route('rental-orders.attachments.show', [$order, $order->signatureAttachment]) }}?raw=1" alt="Unterschrift" style="max-width:100%; border:1px solid var(--a4-border); border-radius:12px;" />

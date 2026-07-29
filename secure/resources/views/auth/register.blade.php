@@ -6,7 +6,7 @@
 @endsection
 
 @section('customStyles')
-    <link rel="stylesheet" href="{{ url('/assets/css/auth.css') }}">
+    <link rel="stylesheet" href="{{ vasset('/assets/css/auth.css') }}">
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
 
         <div class="text-center mb-4">
             <a href="{{ route('home') }}">
-                <img class="logo" src="{{ url('/assets/images/branding/icon.png') }}" alt="Logo">
+                <img class="logo" src="{{ vasset('/assets/images/branding/icon.png') }}" alt="Logo">
             </a>
 
             <h1 class="title mb-1 mt-3">Benutzer hinzufügen</h1>

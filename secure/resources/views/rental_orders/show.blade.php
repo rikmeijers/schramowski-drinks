@@ -1,7 +1,7 @@
 @extends('shared.layout')
 
 @section('customStyles')
-    <link rel="stylesheet" href="{{ url('/assets/css/rental-orders.css') }}">
+    <link rel="stylesheet" href="{{ vasset('/assets/css/rental-orders.css') }}">
 @endsection
 
 @section('content')
@@ -17,7 +17,12 @@
             <a href="{{ route('rental-orders.edit', $order) }}" class="btn btn-outline-primary rounded px-4">
                 <i class="bi bi-pencil-square me-2"></i>Bearbeiten
             </a>
-            <form method="POST" action="{{ route('rental-orders.destroy', $order) }}" onsubmit="return confirm('Möchtest du diese Vermietung endgültig löschen? Foto und Unterschrift werden ebenfalls gelöscht.');" data-prevent-double-submit>
+            <form method="POST" action="{{ route('rental-orders.destroy', $order) }}"
+                  data-prevent-double-submit
+                  data-delete-form
+                  data-has-outstanding="{{ $order->hasOutstandingAmountData() ? '1' : '0' }}"
+                  data-outstanding-amount="{{ $order->outstanding_amount !== null ? number_format((float) $order->outstanding_amount, 2, ',', '.') : '' }}"
+                  data-has-receipt="{{ $order->receiptAttachment ? '1' : '0' }}">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-outline-danger rounded px-4" data-loading-text="Wird gelöscht…">
@@ -78,6 +83,14 @@
                                 -
                             @endif
                         </dd>
+                        <dt class="col-sm-5">Offener Betrag</dt>
+                        <dd class="col-sm-7">
+                            @if($order->outstanding_amount !== null)
+                                {{ number_format((float) $order->outstanding_amount, 2, ',', '.') }} €
+                            @else
+                                -
+                            @endif
+                        </dd>
                     </dl>
                 </div>
             </div>
@@ -94,6 +107,15 @@
                             <a class="btn btn-sm btn-outline-primary rounded px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->photoAttachment]) }}">Foto öffnen</a>
                         @else
                             <div class="text-body-secondary">Kein Foto.</div>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="fw-semibold mb-1">Kassenbon</div>
+                        @if($order->receiptAttachment)
+                            <a class="btn btn-sm btn-outline-primary rounded px-3" href="{{ route('rental-orders.attachments.show', [$order, $order->receiptAttachment]) }}">Kassenbon öffnen</a>
+                        @else
+                            <div class="text-body-secondary">Kein Kassenbon.</div>
                         @endif
                     </div>
 
@@ -217,5 +239,35 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('customScripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('[data-delete-form]');
+            if (!form) return;
+
+            form.addEventListener('submit', function (event) {
+                const hasOutstanding = form.getAttribute('data-has-outstanding') === '1';
+                const amount = form.getAttribute('data-outstanding-amount') || '';
+                const hasReceipt = form.getAttribute('data-has-receipt') === '1';
+
+                let message = 'Möchtest du diese Vermietung endgültig löschen? Foto und Unterschrift werden ebenfalls gelöscht.';
+
+                if (hasOutstanding) {
+                    const details = [];
+                    if (amount !== '') details.push('Offener Betrag: ' + amount + ' €');
+                    if (hasReceipt) details.push('Kassenbon-Foto vorhanden');
+                    message = 'Achtung: Für diese Vermietung ist ein offener Betrag hinterlegt'
+                        + (details.length ? ' (' + details.join(', ') + ')' : '')
+                        + '.\n\nMöchtest du die Vermietung wirklich endgültig löschen? Alle Anhänge werden ebenfalls gelöscht.';
+                }
+
+                if (!window.confirm(message)) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 @endsection
 

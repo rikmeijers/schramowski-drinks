@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg fixed-top modern-header">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-            <img src="{{ url('/assets/images/branding/icon.png') }}" width="36" height="36" alt="{{ config('app.name', 'App') }}">
+            <img src="{{ vasset('/assets/images/branding/icon.png') }}" width="36" height="36" alt="{{ config('app.name', 'App') }}">
             <span class="ms-2 fw-semibold app-name mobile-hidden" style="font-size:.9375rem;color:#0F172A;">{{ config('app.name', 'App') }}</span>
         </a>
 

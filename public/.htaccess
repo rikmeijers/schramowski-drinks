@@ -30,3 +30,10 @@
     php_value post_max_size 12M
 </IfModule>
 
+# Static assets: long cache is safe because URLs are versioned via ?v= (vasset()).
+<IfModule mod_headers.c>
+    <FilesMatch "\.(?i:css|js|mjs|png|jpe?g|gif|webp|svg|ico|woff2?|ttf|eot|map)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
+

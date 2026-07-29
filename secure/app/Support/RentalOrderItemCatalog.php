@@ -23,10 +23,12 @@ class RentalOrderItemCatalog
 
             // Glaswerk
             'bierglazen' => 'Biergläser',
+            'bierpullen' => 'Bierkrüge',
             'wijnglazen' => 'Weingläser',
             'schnapsglazen' => 'Schnapsgläser',
             'sektglazen' => 'Sektgläser',
             'kolschglazen' => 'Kölschgläser',
+            'zachteglazen' => 'Zachtegläser',
 
             // Mobiliar & Kühlung
             'statafels' => 'Stehtisch/-e',
@@ -35,7 +37,8 @@ class RentalOrderItemCatalog
             'dienbladen' => 'Tablett/-s',
             'koelkast' => 'Kühlschrank',
             'koeltruhe' => 'Kühltruhe',
-            'koelwagen' => 'Kleiner Kühlwagen',
+            'koelwagen' => 'Kühlwagen 3,5t',
+            'koelwagen_14t' => 'Kühlwagen 14t',
 
             // Spülset
             'spueltheke' => 'Spültheke/-n',
@@ -44,9 +47,8 @@ class RentalOrderItemCatalog
             'spuel_stopfen' => 'Stopfen',
             'spuel_wasserhahn' => 'Wasserhahn',
             'spuel_gardena' => 'Gardena Anschluss',
+            'afwasborstel' => 'Spülbürste',
             'arbeitstheke' => 'Arbeitstheke/-n',
-
-            // (Pfandschein items removed)
         ];
     }
 
@@ -56,4 +58,3 @@ class RentalOrderItemCatalog
         return $labels[$key] ?? $key;
     }
 }
-

@@ -55,9 +55,13 @@ class RentalOrderController extends Controller
             'return_date' => $validated['return_date'] ?? null,
             'items' => $validated['items'] ?? [],
             'notes' => $validated['notes'] ?? null,
+            'outstanding_amount' => array_key_exists('outstanding_amount', $validated) && $validated['outstanding_amount'] !== null && $validated['outstanding_amount'] !== ''
+                ? $validated['outstanding_amount']
+                : null,
         ]);
 
         $this->storePhotoIfPresent($order, $request);
+        $this->storeReceiptIfPresent($order, $request);
         $this->storeSignatureIfPresent($order, $validated['signature_data_url'] ?? null);
 
         $adminToAddress = (string) config('rental-orders.mail_to_address');
@@ -161,9 +165,13 @@ class RentalOrderController extends Controller
             'return_date' => $validated['return_date'] ?? null,
             'items' => $validated['items'] ?? [],
             'notes' => $validated['notes'] ?? null,
+            'outstanding_amount' => array_key_exists('outstanding_amount', $validated) && $validated['outstanding_amount'] !== null && $validated['outstanding_amount'] !== ''
+                ? $validated['outstanding_amount']
+                : null,
         ]);
 
         $this->storePhotoIfPresent($rentalOrder, $request);
+        $this->storeReceiptIfPresent($rentalOrder, $request);
         $this->storeSignatureIfPresent($rentalOrder, $validated['signature_data_url'] ?? null);
 
         return Redirect::route('rental-orders.show', $rentalOrder)
@@ -194,7 +202,11 @@ class RentalOrderController extends Controller
             ]);
         }
 
-        $typeLabels = ['photo' => 'Foto', 'signature' => 'Unterschrift'];
+        $typeLabels = [
+            'photo' => 'Foto',
+            'signature' => 'Unterschrift',
+            'receipt' => 'Kassenbon',
+        ];
 
         return view('rental_orders.attachment', [
             'title' => ($typeLabels[$attachment->type] ?? 'Anhang') . ' – Vermietung #' . $rentalOrder->id,
@@ -268,6 +280,28 @@ class RentalOrderController extends Controller
 
         $order->attachments()->create([
             'type' => 'photo',
+            'disk' => 'local',
+            'path' => $path,
+            'original_name' => $file->getClientOriginalName(),
+            'mime_type' => $file->getClientMimeType(),
+            'size' => $file->getSize(),
+        ]);
+    }
+
+    private function storeReceiptIfPresent(RentalOrder $order, Request $request): void
+    {
+        if (!$request->hasFile('receipt')) return;
+        $file = $request->file('receipt');
+        if (!$file || !$file->isValid()) return;
+
+        $dir = 'rental-orders/'.$order->id;
+        $name = 'receipt-'.Str::uuid().'.'.$file->getClientOriginalExtension();
+        $path = $file->storeAs($dir, $name, 'local');
+
+        $order->attachments()->where('type', 'receipt')->delete();
+
+        $order->attachments()->create([
+            'type' => 'receipt',
             'disk' => 'local',
             'path' => $path,
             'original_name' => $file->getClientOriginalName(),

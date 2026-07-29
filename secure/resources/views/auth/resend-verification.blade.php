@@ -6,14 +6,14 @@
 @endsection
 
 @section('customStyles')
-    <link rel="stylesheet" href="{{ url('/assets/css/auth.css') }}">
+    <link rel="stylesheet" href="{{ vasset('/assets/css/auth.css') }}">
 @endsection
 
 @section('content')
     <div class="auth-content">
         <div class="text-center mb-4">
             <a href="{{ route('login.form') }}">
-                <img class="logo" src="{{ url('/assets/images/branding/icon.png') }}" alt="Logo">
+                <img class="logo" src="{{ vasset('/assets/images/branding/icon.png') }}" alt="Logo">
             </a>
             <h1 class="title mb-1">Bestätigungs-E-Mail erneut senden</h1>
             <p class="text-body-secondary">Gib deine E-Mail-Adresse ein, um eine neue Bestätigungs-E-Mail zu erhalten.</p>

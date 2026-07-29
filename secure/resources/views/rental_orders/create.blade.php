@@ -1,7 +1,7 @@
 @extends('shared.layout')
 
 @section('customStyles')
-    <link rel="stylesheet" href="{{ url('/assets/css/rental-orders.css') }}">
+    <link rel="stylesheet" href="{{ vasset('/assets/css/rental-orders.css') }}">
 @endsection
 
 @section('content')
@@ -17,10 +17,10 @@
 
         $leftKeys = [
             'zapfanlage','transportkist','kegs','drukmeter','slangen','afdruipbak','sleutel','co2',
-            'bierglazen','wijnglazen','schnapsglazen','sektglazen','kolschglazen',
-            'statafels','bankgarnituren','asbakken','dienbladen','koelkast','koeltruhe','koelwagen'
+            'bierglazen','bierpullen','wijnglazen','schnapsglazen','sektglazen','kolschglazen','zachteglazen',
+            'statafels','bankgarnituren','asbakken','dienbladen','koelkast','koeltruhe','koelwagen','koelwagen_14t'
         ];
-        $rightKeys = ['spueltheke','spuel_schlauch','spuel_dreieck','spuel_stopfen','spuel_wasserhahn','spuel_gardena','arbeitstheke'];
+        $rightKeys = ['spueltheke','spuel_schlauch','spuel_dreieck','spuel_stopfen','spuel_wasserhahn','spuel_gardena','afwasborstel','arbeitstheke'];
 
         $leftItems = collect($leftKeys)->mapWithKeys(fn($k) => [$k => $catalog[$k] ?? $k])->all();
         $rightItems = collect($rightKeys)->mapWithKeys(fn($k) => [$k => $catalog[$k] ?? $k])->all();
@@ -196,6 +196,24 @@
             <hr class="my-4" />
 
             <div class="row g-4">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Offener Betrag <span class="small text-body-secondary fw-normal">(optional)</span></label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" name="outstanding_amount" min="0" step="0.01" inputmode="decimal" value="{{ old('outstanding_amount') }}" placeholder="0,00" />
+                        <span class="input-group-text">€</span>
+                    </div>
+                    <div class="form-text">Offener Kassenbetrag / Pfandschein.</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Kassenbon-Foto <span class="small text-body-secondary fw-normal">(optional)</span></label>
+                    <input class="form-control" type="file" name="receipt" accept="image/*" />
+                    <div class="form-text">Foto des Kassenbons zur Vermietung speichern.</div>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="row g-4">
                 @if($photoEnabled)
                     <div class="col-lg-6">
                         <label class="form-label fw-semibold">Foto-Upload {!! $photoRequired ? '<span class="text-danger">*</span>' : '<span class="small text-body-secondary fw-normal">(optional)</span>' !!}</label>
@@ -233,8 +251,8 @@
 @endsection
 
 @section('customScripts')
-    <script src="{{ url('/assets/js/rental-orders-signature.js') }}"></script>
-    <script src="{{ url('/assets/js/rental-orders-dates.js') }}"></script>
+    <script src="{{ vasset('/assets/js/rental-orders-signature.js') }}"></script>
+    <script src="{{ vasset('/assets/js/rental-orders-dates.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // --- Transportkist → add/subtract defaults to kegs, drukmeter, slangen, afdruipbak, sleutel ---

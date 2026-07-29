@@ -6,7 +6,7 @@
 @endsection
 
 @section('customStyles')
-    <link rel="stylesheet" href="{{ url('/assets/css/settings.css') }}">
+    <link rel="stylesheet" href="{{ vasset('/assets/css/settings.css') }}">
     <style>
         .nav-link.settings {
             background-color: var(--bs-primary);

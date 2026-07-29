@@ -4,7 +4,7 @@
     <section class="row row-cols-1 row-cols-sm-2 row-cols-md-4 py-4 my-4">
         <div class="col-12 col-lg-3 col-md-6 col-sm-12 mb-3">
             <a href="{{ url('/') }}" class="mb-3 link-body-emphasis text-decoration-none">
-                <img src="{{ url('/assets/images/branding/icon.png') }}" width="100" alt="Icon">
+                <img src="{{ vasset('/assets/images/branding/icon.png') }}" width="100" alt="Icon">
             </a>
             <p class="text-body-secondary mt-3 m-0">{{ config('app.name', 'App') }}</p>
             <p class="text-body-secondary m-0 mb-2">

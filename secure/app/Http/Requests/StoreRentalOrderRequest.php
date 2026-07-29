@@ -69,6 +69,9 @@ class StoreRentalOrderRequest extends FormRequest
                 'max:5000',
             ])),
 
+            'outstanding_amount' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
+            'receipt' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+
             'photo' => array_values(array_filter([
                 ($photoEnabled ? ($photoRequired ? 'required' : 'nullable') : 'prohibited'),
                 'file',
@@ -141,6 +144,15 @@ class StoreRentalOrderRequest extends FormRequest
             'notes.max' => 'Die Notizen dürfen nicht mehr als 5000 Zeichen enthalten.',
             'notes.prohibited' => 'Das Notiz-Feld ist deaktiviert.',
 
+            // Outstanding amount / receipt
+            'outstanding_amount.numeric' => 'Der offene Betrag muss eine Zahl sein.',
+            'outstanding_amount.min' => 'Der offene Betrag darf nicht negativ sein.',
+            'outstanding_amount.max' => 'Der offene Betrag ist zu groß.',
+            'receipt.file' => 'Der Kassenbon muss eine Datei sein.',
+            'receipt.mimes' => 'Der Kassenbon muss vom Typ JPG, JPEG, PNG oder WEBP sein.',
+            'receipt.max' => 'Der Kassenbon darf nicht größer als 8 MB sein.',
+            'receipt.uploaded' => 'Der Kassenbon konnte nicht hochgeladen werden. Bitte stelle sicher, dass die Datei nicht größer als 8 MB ist.',
+
             // Photo
             'photo.required' => 'Bitte lade ein Foto hoch.',
             'photo.file' => 'Das Foto muss eine Datei sein.',
@@ -170,6 +182,8 @@ class StoreRentalOrderRequest extends FormRequest
             'rental_date' => 'Datum',
             'return_date' => 'Rückgabedatum',
             'notes' => 'Notizen',
+            'outstanding_amount' => 'Offener Betrag',
+            'receipt' => 'Kassenbon',
             'photo' => 'Foto',
             'signature_data_url' => 'Unterschrift',
         ];
